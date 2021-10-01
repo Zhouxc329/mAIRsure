@@ -1,5 +1,3 @@
-<div id ="MetaData"> </div>
-<script>
 async function readMetaData(){
 	let url = 'WYO_MetaData.json';
 	try{
@@ -58,4 +56,3 @@ function initMap() {
 		google.maps.event.addListener(marker, 'click', fn);
 	}
 }
-</script>
