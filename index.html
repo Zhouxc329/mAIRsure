@@ -1,1 +1,7 @@
 <h1>Hello world!</h1>
+<div id ="MetaData"> </div>
+<script>
+	fetch("WYO_MetaData.json")
+		.then(response => response.json())
+		.then(data => {console.log(data)})
+</script>
