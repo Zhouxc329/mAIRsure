@@ -1,5 +1,5 @@
 async function readMetaData(){
-	let url = 'WYO_MetaData.json';
+	let url = 'doc/WYO_MetaData.json';
 	try{
 		let res = await fetch(url);
 		
