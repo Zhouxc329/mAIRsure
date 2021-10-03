@@ -1,7 +1,27 @@
-<h1>Hello world!</h1>
-<div id ="MetaData"></div>
-<script>
-    fetch("WYO_MetaData.json")
-	.then(response => response.json())
-	.then(data => {console.log(data)})
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>logo</title>
+	<link rel="stylesheet" href="css/style.css">
+  </head>
+
+<body>
+	<div id="map"></div>
+	<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=&v=weekly&channel=2"
+      async
+    ></script>
+	
+    <h2>Clickable Dropdown</h2>
+    <p>Click on the button to open the dropdown menu.</p>
+    <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn">Locate a site</button>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+    </div>
+<\body>
