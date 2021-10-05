@@ -19,12 +19,21 @@
 
             function initMap() {
                 let data = readMetaData();
+                data.then(temp => {const Latitude = temp.map(wellpad => wellpad.Lat)});
+                data.then(temp => {const Longitude = temp.map(wellpad => wellpad.Lon)});
+                data.then(temp => {const Q_med = temp.map(wellpad => wellpad.Q_med)});
+                data.then(temp => {const Q_high = temp.map(wellpad => wellpad.Q_high)});
+                data.then(temp => {const Q_low = temp.map(wellpad => wellpad.Q_low)});
+                data.then(temp => {const WellDetect = temp.map(wellpad => wellpad.Detections)});
+                data.then(temp => {const Anomaly = temp.map(wellpad => wellpad.Abnormal)});
+                data.then(temp => {const WellName = temp.map(wellpad => wellpad.Wellhead(s))});
+
                 var count, marker;
 
                 // Init map
                 var mapOptions = {
                     zoom: 13,
-                    center: new google.maps.LatLng(data.Lat[0], data.Lon[0]),
+                    center: new google.maps.LatLng(Latitude[0], Longitude[0]),
                     scrollwheel: true,
                 };
 
@@ -39,24 +48,24 @@
                 var infoFn = function (count) {
                     return function (e) {
                         var content = '<div>' +
-                            '<span> Name: ' + data.Wellhead(s)[count] + '</span>' +
-                            '<span>, Detections: ' + data.Detections[count] + '</span>' +
-                            '<span>, Anomaly: ' + data.Abnormal[count] + '</span>' +
-                            '<span>, Emission: ' + data.Q_med[count] + '</span>' +
-                            '<span>, Confidence range: ' + data.Q_low[count] + 'to' + data.Q_high[count] + '</span>' +
+                            '<span> Name: ' + WellName[count] + '</span>' +
+                            '<span>, Detections: ' + WellDetect[count] + '</span>' +
+                            '<span>, Anomaly: ' + Anomaly[count] + '</span>' +
+                            '<span>, Emission: ' + Q_med[count] + '</span>' +
+                            '<span>, Confidence range: ' + Q_low[count] + 'to' + Q_high[count] + '</span>' +
                             '</div>';
                         infowindow.setContent(content);
                         infowindow.open(map);
-                        infowindow.setPosition(new google.maps.LatLng(data.Lat[count], data.Lon[count]));
+                        infowindow.setPosition(new google.maps.LatLng(Latitude[count], Longitude[count]));
                     }
                 };
 
                 // Add markers
-                for (count = 0; count < data.length; count++) {
+                for (count = 0; count < Latitude.length; count++) {
                     marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(data.Lat[count], data.Lon[count]),
+                        position: new google.maps.LatLng(Latitude[count], Longitude[count]),
                         map: map,
-                        title: data.Wellhead(s)[count]
+                        title: WellName[count]
                     });
                     marker.setMap(map);
 
