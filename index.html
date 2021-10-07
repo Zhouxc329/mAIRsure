@@ -1,99 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>logo</title>
-        <link rel="stylesheet" href="css/style.css">
-        
-        <script>
-            async function readMetaData(){
-                let url = 'doc/WYO_MetaData.json';
-                try{
-                    let res = await fetch(url);
-                    
-                    return await res.json();
-                } catch (error) {
-                    console.log(error);
-                }
-            }
 
-            function initMap() {
-                let data = readMetaData();
-                data.then(temp => {const Latitude = temp.map(wellpad => wellpad.Lat)});
-                data.then(temp => {const Longitude = temp.map(wellpad => wellpad.Lon)});
-                data.then(temp => {const Q_med = temp.map(wellpad => wellpad.Q_med)});
-                data.then(temp => {const Q_high = temp.map(wellpad => wellpad.Q_high)});
-                data.then(temp => {const Q_low = temp.map(wellpad => wellpad.Q_low)});
-                data.then(temp => {const WellDetect = temp.map(wellpad => wellpad.Detections)});
-                data.then(temp => {const Anomaly = temp.map(wellpad => wellpad.Abnormal)});
-                data.then(temp => {const WellName = temp.map(wellpad => wellpad.Wellhead(s))});
+<head>
+    <meta charset="utf-8">
+    <title>logo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#">
 
-                var count, marker;
+    <script>
 
-                // Init map
-                var mapOptions = {
-                    zoom: 13,
-                    center: new google.maps.LatLng(Latitude[0], Longitude[0]),
-                    scrollwheel: true,
-                };
+        async function initMap() {
+            let url = 'Data.json'
+            let content = await fetch(url);
+            let data = await content.json();
+            let Latitude = data.map(d => d.Lat);
+            let Longitude = data.map(d => d.Lon);
+            let Q_med = data.map(d => d.Q_med);
+            let Q_high = data.map(d => d.Q_high);
+            let Q_low = data.map(d => d.Q_low);
+            let WellDetect = data.map(d => d.Detections);
+            let Anomaly = data.map(d => d.Abnormal);
+            let WellName = data.map(d => d.Wellhead);
+            var count, marker;
 
-                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            const average = (array) => array.reduce((a, b) => a + b) / array.length;
+            // Init map
+            var mapOptions = {
+                zoom: 12,
+                center: new google.maps.LatLng(average(Latitude), average(Longitude)),
+                scrollwheel: true,
+                mapTypeId: 'satellite'
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            // Create info window
+            var infowindow = new google.maps.InfoWindow({
+                maxWidth: 350,
+                pixelOffset: new google.maps.Size(-10, -25)
+            });
 
-                // Create info window
-                var infowindow = new google.maps.InfoWindow({
-                    maxWidth: 350,
-                    pixelOffset: new google.maps.Size(-10,-25)
-                });
-
-                var infoFn = function (count) {
-                    return function (e) {
+            var infoFn = function (count) {
+                return function (e) {
+                    if (isNaN(Q_low[count]) || isNaN(Q_high[count])) {
                         var content = '<div>' +
                             '<span> Name: ' + WellName[count] + '</span>' +
-                            '<span>, Detections: ' + WellDetect[count] + '</span>' +
-                            '<span>, Anomaly: ' + Anomaly[count] + '</span>' +
-                            '<span>, Emission: ' + Q_med[count] + '</span>' +
-                            '<span>, Confidence range: ' + Q_low[count] + 'to' + Q_high[count] + '</span>' +
+                            '<span> <br \> Detections: ' + WellDetect[count] + '</span>' +
+                            '<span> <br \> Anomaly: ' + Anomaly[count] + '</span>' +
+                            '<span> <br \> Emission: ' + Q_med[count] + ' g/s' + '</span>' +
+                            '<span> <br \> Confidence range: Not available </span>' +
                             '</div>';
-                        infowindow.setContent(content);
-                        infowindow.open(map);
-                        infowindow.setPosition(new google.maps.LatLng(Latitude[count], Longitude[count]));
+                    } else {
+                        var content = '<div>' +
+                            '<span> Name: ' + WellName[count] + '</span>' +
+                            '<span> <br \> Detections: ' + WellDetect[count] + '</span>' +
+                            '<span> <br \> Anomaly: ' + Anomaly[count] + '</span>' +
+                            '<span> <br \> Emission: ' + Q_med[count] + ' g/s' + '</span>' +
+                            '<span> <br \> Confidence range: ' + Q_low[count] + ' to ' + Q_high[count] + ' g/s' + '</span>' +
+                            '</div>';
                     }
-                };
 
-                // Add markers
-                for (count = 0; count < Latitude.length; count++) {
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(Latitude[count], Longitude[count]),
-                        map: map,
-                        title: WellName[count]
-                    });
-                    marker.setMap(map);
+                    infowindow.setContent(content);
+                    infowindow.open(map);
+                    infowindow.setPosition(new google.maps.LatLng(Latitude[count], Longitude[count]));
+                    //map.setZoom(16);
+                }
+            };
 
-                    let fn = infoFn(count);
-                    google.maps.event.addListener(marker, 'click', fn);
+            // Add markers
+            for (count = 0; count < Latitude.length; count++) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(Latitude[count], Longitude[count]),
+                    map: map,
+                    title: WellName[count],
+                    //icon: "https://www.iconspng.com/uploads/oil-or-gas-well/oil-or-gas-well.png"
+                })                
+                marker.setMap(map);
+                
+
+                let fn = infoFn(count);
+                google.maps.event.addListener(marker, 'click', fn);
+            }
+            // add dropdown list for all sites            
+            // var list = document.getElementById('myDropdown')
+            for (i = 0; i < WellName.length; i++) {
+                // var paragraph = document.createElement("p");
+                // paragraph.setAttribute("style", "border: 1px solid #000;");
+                // paragraph.innerHTML = WellName[i];
+                // list.appendChild(paragraph);
+                document.getElementById("wellPadDropdown").options.add(new Option(WellName[i], i));
+            }
+
+            var listElement = document.getElementById('wellPadDropdown').childNodes;
+            for (var j = 0; j < listElement.length-1; j++) {
+                // First element is text, 2nd is option.
+                listElement[j+1].addEventListener("click", infoFn(j));
+
+
+                // listElement[j].addEventListener("click", function () {
+                //     // map.setZoom(WellName.indexOf(this.innerHTML))
+                //     // console.log(WellName.indexOf(this.innerHTML))
+                //     map.setCenter({
+                //         lat: Latitude[WellName.indexOf(this.innerHTML)],
+                //         lng: Longitude[WellName.indexOf(this.innerHTML)]
+                //     });
+                //     map.setZoom(16)
+                // });
+            }
+
+        }
+
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
                 }
             }
-        </script>
-    </head>
+        }
+    </script>
+</head>
 
-    <body>
-        <div id="map"></div>
-        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-        <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&libraries=&v=weekly&channel=2"
-        async
-        ></script>
-        
-        <h2>Clickable Dropdown</h2>
-        <p>Click on the button to open the dropdown menu.</p>
-        <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Locate a site</button>
-            <div id="myDropdown" class="dropdown-content">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-            </div>
+<body>
+    <div id="map"></div>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN1tZbka9t4kLkr_63kMRCHLa8E59-PP8&callback=initMap&libraries=&v=weekly&channel=2"
+        async></script>
+
+    <!-- <div id="SiteList"></div>
+
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Select a wellpad</button>
+        <div id="myDropdown" class="dropdown-content">
         </div>
-    </body>
+    </div> -->
+
+    <form action="/action_page.php">
+        <label for="wellPadDropdown">Choose a wellpad:</label>
+        <select name="wellPadDropdown" class="dropbtn" id="wellPadDropdown" onmousedown="if(this.options.length>5){this.size=5;}"
+            onchange='this.size=0;' onblur="this.size=0;">
+        </select>
+        <br><br>
+        <!-- <input type="submit" value="Submit"> -->
+    </form>
+
+</body>
 
 </html>
