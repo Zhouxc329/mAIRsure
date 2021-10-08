@@ -60,10 +60,11 @@
   top: 8px;
   right: 16px;
   height: auto;
-  /* max-height: 200px; */
+  max-height: 200px;
   overflow-x: hidden;
   padding: 16px;
   font-size: 16px;
   border: none;
   cursor: pointer;
 }
+
