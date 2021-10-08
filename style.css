@@ -1,6 +1,6 @@
 /* Set the size of the div element that contains the map */
 #map {
-  height: 600px;
+  height: 700px;
   /* The height is 400 pixels */
   width: 80%;
   /* The width is the width of the web page */
@@ -53,11 +53,17 @@
   font-size: 18px;
 }
 
+
 .menu {
+  background-color: #71c9ec;
   position: absolute;
   top: 8px;
   right: 16px;
   height: auto;
-  max-height: 200px;
+  /* max-height: 200px; */
   overflow-x: hidden;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
 }
