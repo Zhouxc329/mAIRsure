@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>logo</title>
+    <title>mAIRsure</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="#">
 
     <script>
 
         async function initMap() {
-            let url = 'Data.json'
+            let url = 'WYO_Results.json'
             let content = await fetch(url);
             let data = await content.json();
             let Latitude = data.map(d => d.Lat);
@@ -26,12 +26,13 @@
             const average = (array) => array.reduce((a, b) => a + b) / array.length;
             // Init map
             var mapOptions = {
-                zoom: 12,
+                zoom: 13,
                 center: new google.maps.LatLng(average(Latitude), average(Longitude)),
                 scrollwheel: true,
-                mapTypeId: 'satellite'
+                mapTypeId: 'hybrid'
             };
             var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
             // Create info window
             var infowindow = new google.maps.InfoWindow({
                 maxWidth: 350,
@@ -42,19 +43,19 @@
                 return function (e) {
                     if (isNaN(Q_low[count]) || isNaN(Q_high[count])) {
                         var content = '<div>' +
-                            '<span> Name: ' + WellName[count] + '</span>' +
-                            '<span> <br \> Detections: ' + WellDetect[count] + '</span>' +
-                            '<span> <br \> Anomaly: ' + Anomaly[count] + '</span>' +
-                            '<span> <br \> Emission: ' + Q_med[count] + ' g/s' + '</span>' +
-                            '<span> <br \> Confidence range: Not available </span>' +
+                            '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
+                            '<span style = "font-weight:bold"> <br \> Detections: </span>' + WellDetect[count] +
+                            '<span style = "font-weight:bold"> <br \> Anomaly: </span>' + Anomaly[count] + 
+                            '<span style = "font-weight:bold"> <br \> Emission: </span>' + Q_med[count] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Confidence range: </span>' + "Not available" +
                             '</div>';
                     } else {
                         var content = '<div>' +
-                            '<span> Name: ' + WellName[count] + '</span>' +
-                            '<span> <br \> Detections: ' + WellDetect[count] + '</span>' +
-                            '<span> <br \> Anomaly: ' + Anomaly[count] + '</span>' +
-                            '<span> <br \> Emission: ' + Q_med[count] + ' g/s' + '</span>' +
-                            '<span> <br \> Confidence range: ' + Q_low[count] + ' to ' + Q_high[count] + ' g/s' + '</span>' +
+                            '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
+                            '<span style = "font-weight:bold"> <br \> Detections: </span>' + WellDetect[count] +
+                            '<span style = "font-weight:bold"> <br \> Anomaly: </span>' + Anomaly[count] + 
+                            '<span style = "font-weight:bold"> <br \> Emission: </span>' + Q_med[count] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Confidence range: </span>' + Q_low[count] + ' to ' + Q_high[count] + ' g/s' +
                             '</div>';
                     }
 
@@ -72,9 +73,9 @@
                     map: map,
                     title: WellName[count],
                     //icon: "https://www.iconspng.com/uploads/oil-or-gas-well/oil-or-gas-well.png"
-                })                
+                })
                 marker.setMap(map);
-                
+
 
                 let fn = infoFn(count);
                 google.maps.event.addListener(marker, 'click', fn);
@@ -90,9 +91,9 @@
             }
 
             var listElement = document.getElementById('wellPadDropdown').childNodes;
-            for (var j = 0; j < listElement.length-1; j++) {
+            for (var j = 0; j < listElement.length - 3; j++) {
                 // First element is text, 2nd is option.
-                listElement[j+1].addEventListener("click", infoFn(j));
+                listElement[j + 3].addEventListener("click", infoFn(j));
 
 
                 // listElement[j].addEventListener("click", function () {
@@ -146,9 +147,10 @@
     </div> -->
 
     <form action="/action_page.php">
-        <label for="wellPadDropdown">Choose a wellpad:</label>
-        <select name="wellPadDropdown" class="menu" id="wellPadDropdown" onmousedown="if(this.options.length>5){this.size=5;}"
-            onchange='this.size=0;' onblur="this.size=0;">
+        <!-- <label for="wellPadDropdown">Choose a wellpad:</label> -->
+        <select name="wellPadDropdown" class="menu" id="wellPadDropdown"
+            onmousedown="if(this.options.length>10){this.size=10;}" onchange='this.size=0;' onblur="this.size=0;">
+            <option value="" selected disabled hidden>Choose a wellpad</option>
         </select>
         <br><br>
         <!-- <input type="submit" value="Submit"> -->
