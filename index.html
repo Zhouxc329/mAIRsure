@@ -44,17 +44,19 @@
                     if (isNaN(Q_low[count]) || isNaN(Q_high[count])) {
                         var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> \t Detections: </span>' + WellDetect[count] +
-                            '<span style = "font-weight:bold"> <br \> \t Anomaly: </span>' + Anomaly[count] + 
-                            '<span style = "font-weight:bold"> <br \> \t Emission: </span>' + Q_med[count] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Date: Jul, 2021 </span>' + '\t'+
+                            '<span style = "font-weight:bold"> <br \> \t Detections: </span>' + WellDetect[count] + '\t'+
+                            '<span style = "font-weight:bold"> <br \> \t Anomaly: </span>' + Anomaly[count] + '\t'+ 
+                            '<span style = "font-weight:bold"> <br \> \t Emission: </span>' + Q_med[count] + ' g/s' + '\t'+
                             '<span style = "font-weight:bold"> <br \> \t Confidence range: </span>' + "Not available" +
                             '</div>';
                     } else {
                         var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> \t Detections: </span>' + WellDetect[count] +
-                            '<span style = "font-weight:bold"> <br \> \t Anomaly: </span>' + Anomaly[count] + 
-                            '<span style = "font-weight:bold"> <br \> \t Emission: </span>' + Q_med[count] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Date: Jul, 2021 </span>' + '\t'+
+                            '<span style = "font-weight:bold"> <br \> \t Detections: </span>' + WellDetect[count] + '\t'+
+                            '<span style = "font-weight:bold"> <br \> \t Anomaly: </span>' + Anomaly[count] + '\t'+
+                            '<span style = "font-weight:bold"> <br \> \t Emission: </span>' + Q_med[count] + ' g/s' + '\t'+
                             '<span style = "font-weight:bold"> <br \> \t Confidence range: </span>' + Q_low[count] + ' to ' + Q_high[count] + ' g/s' +
                             '</div>';
                     }
