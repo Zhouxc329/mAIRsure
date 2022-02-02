@@ -10,7 +10,7 @@
     <script>
 
         async function initMap() {
-            let url = 'WYO_Results.json'
+            let url = 'WYO_Jul_Nov.json'
             let content = await fetch(url);
             let data = await content.json();
             let Latitude = data.map(d => d.Lat);
@@ -36,29 +36,73 @@
             // Create info window
             var infowindow = new google.maps.InfoWindow({
                 maxWidth: 350,
-                pixelOffset: new google.maps.Size(-10, -25)
+                pixelOffset: new google.maps.Size(0, -25)
             });
 
             var infoFn = function (count) {
                 return function (e) {
-                    if (isNaN(Q_low[count]) || isNaN(Q_high[count])) {
+                    var Q_low_arr = Q_low[count].split(',');
+                    var Q_high_arr = Q_high[count].split(',');
+                    var Q_med_arr = Q_med[count].split(',');
+                    var Anomaly_arr = Anomaly[count].split(',');
+                    var WellDetect_arr = WellDetect[count].split(',');
+                    if ((isNaN(Q_low_arr[0]) || isNaN(Q_high_arr[0])) && (isNaN(Q_low_arr[1]) || isNaN(Q_high_arr[1]))) {
                         var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> Detections: </span>' + WellDetect[count] +
-                            '<span style = "font-weight:bold"> <br \> Anomaly: </span>' + Anomaly[count] + 
-                            '<span style = "font-weight:bold"> <br \> Emission: </span>' + Q_med[count] + ' g/s' +
-                            '<span style = "font-weight:bold"> <br \> Confidence range: </span>' + "Not available" +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
                             '</div>';
-                    } else {
-                        var content = '<div>' +
+                        } else if ((isNaN(Q_low_arr[0]) || isNaN(Q_high_arr[0])) && !(isNaN(Q_low_arr[1]) && !(isNaN(Q_high_arr[1]))))  {
+                            var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> Detections: </span>' + WellDetect[count] +
-                            '<span style = "font-weight:bold"> <br \> Anomaly: </span>' + Anomaly[count] + 
-                            '<span style = "font-weight:bold"> <br \> Emission: </span>' + Q_med[count] + ' g/s' +
-                            '<span style = "font-weight:bold"> <br \> Confidence range: </span>' + Q_low[count] + ' to ' + Q_high[count] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low_arr[1] + ' to ' + Q_high_arr[1] + ' g/s' +
                             '</div>';
-                    }
-
+                        } else if ((isNaN(Q_low_arr[1]) || isNaN(Q_high_arr[1])) && !(isNaN(Q_low_arr[0]) && !(isNaN(Q_high_arr[0]))))   {
+                            var content = '<div>' +
+                            '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low[0] + ' to ' + Q_high_arr[0] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
+                            '</div>';
+                        } else {
+                            var content = '<div>' +
+                            '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low_arr[0] + ' to ' + Q_high_arr[0] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
+                            '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low_arr[1] + ' to ' + Q_high_arr[1] + ' g/s' +
+                            '</div>';
+                        }
                     infowindow.setContent(content);
                     infowindow.open(map);
                     infowindow.setPosition(new google.maps.LatLng(Latitude[count], Longitude[count]));
@@ -75,8 +119,6 @@
                     //icon: "https://www.iconspng.com/uploads/oil-or-gas-well/oil-or-gas-well.png"
                 })
                 marker.setMap(map);
-
-
                 let fn = infoFn(count);
                 google.maps.event.addListener(marker, 'click', fn);
             }
@@ -93,8 +135,7 @@
             var listElement = document.getElementById('wellPadDropdown').childNodes;
             for (var j = 0; j < listElement.length - 3; j++) {
                 // First element is text, 2nd is option.
-                listElement[j + 2].addEventListener("click", infoFn(j));
-
+                listElement[j + 3].addEventListener("click", infoFn(j));
 
                 // listElement[j].addEventListener("click", function () {
                 //     // map.setZoom(WellName.indexOf(this.innerHTML))
@@ -148,7 +189,7 @@
 
     <form action="/action_page.php">
         <!-- <label for="wellPadDropdown">Choose a wellpad:</label> -->
-        <select name="wellPadDropdown" class="menu" id="wellPadDropdown" size = 5 onchange='this.size=0;' onblur="this.size=0;">
+        <select name="wellPadDropdown" class="menu" id="wellPadDropdown" size = 5 onchange="this.size=0" onblur="this.size=0">
             <option value="" selected hidden>Choose a wellpad</option>
         </select>
         <br><br>
