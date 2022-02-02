@@ -46,43 +46,43 @@
                     var Q_med_arr = Q_med[count].split(',');
                     var Anomaly_arr = Anomaly[count].split(',');
                     var WellDetect_arr = WellDetect[count].split(',');
-                    if ((isNaN(Q_low_arr[0]) || isNaN(Q_high[0])) && (isNaN(Q_low_arr[1]) || isNaN(Q_high[1]))) {
+                    if ((isNaN(Q_low_arr[0]) || isNaN(Q_high_arr[0])) && (isNaN(Q_low_arr[1]) || isNaN(Q_high_arr[1]))) {
                         var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> Date: Jul, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
-                            '<span style = "font-weight:bold"> <br \> Date: Nov, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
                             '</div>';
-                        } else if ((isNaN(Q_low_arr[0]) || isNaN(Q_high[0])) && !(isNaN(Q_low_arr[1]) && !(isNaN(Q_high[1]))))  {
+                        } else if ((isNaN(Q_low_arr[0]) || isNaN(Q_high_arr[0])) && !(isNaN(Q_low_arr[1]) && !(isNaN(Q_high_arr[1]))))  {
                             var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> Date: Jul, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + "N/A" +
-                            '<span style = "font-weight:bold"> <br \> Date: Nov, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low_arr[1] + ' to ' + Q_high_arr[1] + ' g/s' +
                             '</div>';
-                        } else if ((isNaN(Q_low_arr[1]) || isNaN(Q_high[1])) && !(isNaN(Q_low_arr[0]) && !(isNaN(Q_high[0]))))   {
+                        } else if ((isNaN(Q_low_arr[1]) || isNaN(Q_high_arr[1])) && !(isNaN(Q_low_arr[0]) && !(isNaN(Q_high_arr[0]))))   {
                             var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> Date: Jul, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low[0] + ' to ' + Q_high_arr[0] + ' g/s' +
-                            '<span style = "font-weight:bold"> <br \> Date: Nov, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
@@ -91,12 +91,12 @@
                         } else {
                             var content = '<div>' +
                             '<span style = "font-weight:bold"> Name: </span>' + WellName[count] +
-                            '<span style = "font-weight:bold"> <br \> Date: Jul, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Jul, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[0] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[0] + ' g/s' +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission range: </span>' + Q_low_arr[0] + ' to ' + Q_high_arr[0] + ' g/s' +
-                            '<span style = "font-weight:bold"> <br \> Date: Nov, 2021 </span>' +
+                            '<span style = "font-weight:bold"> <br \> Date: </span>' + "Nov, 2021" +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Detections: </span>' + WellDetect_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Anomaly: </span>' + Anomaly_arr[1] +
                             '<span style = "font-weight:bold"> <br \> &nbsp&nbsp Emission: </span>' + Q_med_arr[1] + ' g/s' +
