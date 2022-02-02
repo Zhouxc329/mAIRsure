@@ -135,7 +135,7 @@
             var listElement = document.getElementById('wellPadDropdown').childNodes;
             for (var j = 0; j < listElement.length - 3; j++) {
                 // First element is text, 2nd is option.
-                listElement[j + 3].addEventListener("click", infoFn(j));
+                listElement[j + 3].addEventListener("click", infoFn(0));
 
                 // listElement[j].addEventListener("click", function () {
                 //     // map.setZoom(WellName.indexOf(this.innerHTML))
@@ -153,12 +153,12 @@
         /* When the user clicks on the button, 
         toggle between hiding and showing the dropdown content */
         function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
+            document.getElementById("wellPadDropdown").classList.toggle("show");
         }
 
         // Close the dropdown if the user clicks outside of it
         window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
+            if (!event.target.matches('.menu')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
                 var i;
                 for (i = 0; i < dropdowns.length; i++) {
@@ -179,13 +179,13 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBN1tZbka9t4kLkr_63kMRCHLa8E59-PP8&callback=initMap&libraries=&v=weekly&channel=2"
         async></script>
 
-    <div id="SiteList"></div>
+    <!-- <div id="SiteList"></div>
 
     <div class="dropdown">
         <button onclick="myFunction()" class="dropbtn">Select a wellpad</button>
         <div id="myDropdown" class="dropdown-content">
         </div>
-    </div>
+    </div> -->
 
     <form action="/action_page.php">
         <!-- <label for="wellPadDropdown">Choose a wellpad:</label> -->
