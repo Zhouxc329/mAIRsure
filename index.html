@@ -135,7 +135,7 @@
             var listElement = document.getElementById('wellPadDropdown').childNodes;
             for (var j = 0; j < listElement.length - 3; j++) {
                 // First element is text, 2nd is option.
-                listElement[j + 3].addEventListener("click", infoFn(0));
+                listElement[j + 3].addEventListener("click", infoFn(j));
 
                 // listElement[j].addEventListener("click", function () {
                 //     // map.setZoom(WellName.indexOf(this.innerHTML))
@@ -189,7 +189,7 @@
 
     <form action="/action_page.php">
         <!-- <label for="wellPadDropdown">Choose a wellpad:</label> -->
-        <select name="wellPadDropdown" class="menu" id="wellPadDropdown" size = 5 onchange="this.size=0" onblur="this.size=0">
+        <select name="wellPadDropdown" class="menu" id="wellPadDropdown" size = 5 >
             <option value="" selected hidden>Choose a wellpad</option>
         </select>
         <br><br>
